@@ -4,6 +4,7 @@
  */
 package com.mycompany.examen;
 
+import javax.swing.JOptionPane;
 import utilerias.OpcionesCRUD;
 
 /**
@@ -153,7 +154,26 @@ public class FrmProductosEsc extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnCancelarActionPerformed
 
     private void jBtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGuardarActionPerformed
-        // TODO add your handling code here:    
+        if(null != OpcionCrud) // TODO add your handling code here:
+        switch (OpcionCrud) {
+            case CREAR:
+                JOptionPane.showMessageDialog(this, 
+                        "Crear registro", "Crear", JOptionPane.INFORMATION_MESSAGE);
+                this.setVisible(false);
+                break;
+            case MODIFICAR:
+                JOptionPane.showMessageDialog(this, 
+                        "Modificar registro", "Modificar", JOptionPane.INFORMATION_MESSAGE);
+                this.setVisible(false);
+                break;
+            case ELIMINAR:
+                JOptionPane.showMessageDialog(this, 
+                        "Eliminar registro", "Eliminar", JOptionPane.INFORMATION_MESSAGE);
+                this.setVisible(false);
+                break;
+            default:
+                break;
+        } 
     }//GEN-LAST:event_jBtnGuardarActionPerformed
 
     /**

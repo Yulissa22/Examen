@@ -76,7 +76,6 @@ public class FrmInicio extends javax.swing.JFrame {
 
     private void jMeCerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMeCerrarMouseClicked
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Cerrar", "Cerrar", JOptionPane.INFORMATION_MESSAGE);
         this.dispose();
         System.exit(0);
     }//GEN-LAST:event_jMeCerrarMouseClicked

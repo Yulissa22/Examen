@@ -9,45 +9,45 @@ package entidades;
  * @author MINEDUCYT
  */
 public class Categoria {
-    private int CategoriaId;
-    private String Nombre;
-    private String Descripcion;
+    private int categoriaId;
+    private String nombre;
+    private String descripcion;
 
     public Categoria() {
     }
 
-    public Categoria(int CategoriaId, String Nombre, String Descripcion) {
-        this.CategoriaId = CategoriaId;
-        this.Nombre = Nombre;
-        this.Descripcion = Descripcion;
+    public Categoria(int categoriaId, String nombre, String descripcion) {
+        this.categoriaId = categoriaId;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
     }
 
     public int getCategoriaId() {
-        return CategoriaId;
+        return categoriaId;
     }
 
-    public void setCategoriaId(int CategoriaId) {
-        this.CategoriaId = CategoriaId;
+    public void setCategoriaId(int categoriaId) {
+        this.categoriaId = categoriaId;
     }
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
-    public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public String getDescripcion() {
-        return Descripcion;
+        return descripcion;
     }
 
-    public void setDescripcion(String Descripcion) {
-        this.Descripcion = Descripcion;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
     
     @Override
     public String toString(){
-        return Nombre;
+        return nombre;
     }
 }

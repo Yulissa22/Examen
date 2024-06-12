@@ -6,6 +6,10 @@ package com.mycompany.examen;
 
 import javax.swing.JOptionPane;
 import utilerias.OpcionesCRUD;
+import accesoadatos.CategoriaDAL;
+import entidades.Categoria;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -20,6 +24,9 @@ public class FrmProductosEsc extends javax.swing.JFrame {
     public FrmProductosEsc(OpcionesCRUD opcion) {
         this.OpcionCrud = opcion;
         initComponents();
+        ArrayList<Categoria> categorias = CategoriaDAL.obtenerTodos();
+        DefaultComboBoxModel<String> modelCombox = new DefaultComboBoxModel(categorias.toArray());
+        jComboCategoria.setModel(modelCombox); 
     }
 
     /**

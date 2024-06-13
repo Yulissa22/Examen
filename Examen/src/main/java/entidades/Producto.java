@@ -11,23 +11,23 @@ package entidades;
 public class Producto {
     private int productoID;
     private String nombre;
-    private String Descripcion;
+    private String descripcion;
     private double precio;
     private int existencia;
-    private int CategoriaId;
+    private int categoriaId;
     
     private Categoria categoria;
 
     public Producto() {
     }
 
-    public Producto(int productoID, String nombre, String Descripcion, double precio, int existencia, int CategoriaId, Categoria categoria) {
+    public Producto(int productoID, String nombre, String descripcion, double precio, int existencia, int categoriaId, Categoria categoria) {
         this.productoID = productoID;
         this.nombre = nombre;
-        this.Descripcion = Descripcion;
+        this.descripcion = descripcion;
         this.precio = precio;
         this.existencia = existencia;
-        this.CategoriaId = CategoriaId;
+        this.categoriaId = categoriaId;
         this.categoria = categoria;
     }
 
@@ -48,11 +48,11 @@ public class Producto {
     }
 
     public String getDescripcion() {
-        return Descripcion;
+        return descripcion;
     }
 
-    public void setDescripcion(String Descripcion) {
-        this.Descripcion = Descripcion;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public double getPrecio() {
@@ -72,11 +72,11 @@ public class Producto {
     }
 
     public int getCategoriaId() {
-        return CategoriaId;
+        return categoriaId;
     }
 
-    public void setCategoriaId(int CategoriaId) {
-        this.CategoriaId = CategoriaId;
+    public void setCategoriaId(int categoriaId) {
+        this.categoriaId = categoriaId;
     }
 
     public Categoria getCategoria() {
@@ -86,5 +86,6 @@ public class Producto {
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
+
     
 }

@@ -7,7 +7,9 @@ package com.mycompany.examen;
 import javax.swing.JOptionPane;
 import utilerias.OpcionesCRUD;
 import accesoadatos.CategoriaDAL;
+import accesoadatos.ProductoDAL;
 import entidades.Categoria;
+import entidades.Producto;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 
@@ -18,6 +20,7 @@ import javax.swing.DefaultComboBoxModel;
 public class FrmProductosEsc extends javax.swing.JFrame {
 
     private OpcionesCRUD OpcionCrud;
+
     /**
      * Creates new form FrmProductosEsc
      */
@@ -25,8 +28,8 @@ public class FrmProductosEsc extends javax.swing.JFrame {
         this.OpcionCrud = opcion;
         initComponents();
         ArrayList<Categoria> categorias = CategoriaDAL.obtenerTodos();
-        DefaultComboBoxModel<String> modelCombox = new DefaultComboBoxModel(categorias.toArray());
-        jComboCategoria.setModel(modelCombox); 
+        DefaultComboBoxModel<Categoria> modelCombox = new DefaultComboBoxModel(categorias.toArray());
+        jComboCategoria.setModel(modelCombox);
     }
 
     /**
@@ -67,8 +70,6 @@ public class FrmProductosEsc extends javax.swing.JFrame {
         jLabel4.setText("Existencia");
 
         jLabel5.setText("Categoria");
-
-        jComboCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jBtnGuardar.setText("Guardar");
         jBtnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -160,38 +161,78 @@ public class FrmProductosEsc extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jBtnCancelarActionPerformed
 
+    private Producto obtenerDatos() {
+        Producto producto = new Producto();
+        producto.setNombre(jTxtNombre.getText());
+        producto.setDescripcion(jTxtADescripcion.getText());
+        producto.setPrecio(Double.parseDouble(jTxtPrecio.getText()));
+        producto.setExistencia(Integer.parseInt(jTxtExistencia.getText()));
+        Categoria categoria = (Categoria) jComboCategoria.getSelectedItem();
+        return producto;
+    }
+
+    private void asignarDatos(Producto producto) {
+        jTxtNombre.setText(producto.getNombre());
+        jTxtADescripcion.setText(producto.getDescripcion());
+        jTxtPrecio.setText(Double.toString(producto.getPrecio()));
+        jTxtExistencia.setText(Integer.toString(producto.getExistencia()));
+        Categoria categoria = new Categoria();
+        categoria.setCategoriaId(producto.getCategoriaId());
+        jComboCategoria.setSelectedItem(categoria);
+    }
+
+    private void crearRegistro() {
+        try {
+            Producto producto = obtenerDatos();
+            int result = ProductoDAL.crear(producto);
+            if (result > 0) {
+                JOptionPane.showMessageDialog(this,
+                        "El producto fue registrado", "CREAR",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "El producto no fue registrado", "ERROR",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(),
+                        "ERROR",
+                        JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
     private void jBtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGuardarActionPerformed
-        if(null != OpcionCrud) // TODO add your handling code here:
-        switch (OpcionCrud) {
-            case CREAR:
-                JOptionPane.showMessageDialog(this, 
-                        "Crear registro", "Crear", JOptionPane.INFORMATION_MESSAGE);
-                this.setVisible(false);
-                break;
-            case MODIFICAR:
-                JOptionPane.showMessageDialog(this, 
-                        "Modificar registro", "Modificar", JOptionPane.INFORMATION_MESSAGE);
-                this.setVisible(false);
-                break;
-            case ELIMINAR:
-                JOptionPane.showMessageDialog(this, 
-                        "Eliminar registro", "Eliminar", JOptionPane.INFORMATION_MESSAGE);
-                this.setVisible(false);
-                break;
-            default:
-                break;
-        } 
+        if (null != OpcionCrud) // TODO add your handling code here:
+            switch (OpcionCrud) {
+                case CREAR:
+                    crearRegistro();
+                    this.setVisible(false);
+                    break;
+                case MODIFICAR:
+                    JOptionPane.showMessageDialog(this,
+                            "Modificar registro", "Modificar", JOptionPane.INFORMATION_MESSAGE);
+                    this.setVisible(false);
+                    break;
+                case ELIMINAR:
+                    JOptionPane.showMessageDialog(this,
+                            "Eliminar registro", "Eliminar", JOptionPane.INFORMATION_MESSAGE);
+                    this.setVisible(false);
+                    break;
+                default:
+                    break;
+            }
     }//GEN-LAST:event_jBtnGuardarActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnCancelar;
     private javax.swing.JButton jBtnGuardar;
-    private javax.swing.JComboBox<String> jComboCategoria;
+    private javax.swing.JComboBox<Categoria> jComboCategoria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

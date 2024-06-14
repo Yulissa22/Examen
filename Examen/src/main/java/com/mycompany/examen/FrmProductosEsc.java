@@ -19,13 +19,13 @@ import javax.swing.DefaultComboBoxModel;
  */
 public class FrmProductosEsc extends javax.swing.JFrame {
 
-    private OpcionesCRUD OpcionCrud;
+    private OpcionesCRUD opcionCRUD;
 
     /**
      * Creates new form FrmProductosEsc
      */
     public FrmProductosEsc(OpcionesCRUD opcion) {
-        this.OpcionCrud = opcion;
+        this.opcionCRUD = opcion;
         initComponents();
         ArrayList<Categoria> categorias = CategoriaDAL.obtenerTodos();
         DefaultComboBoxModel<Categoria> modelCombox = new DefaultComboBoxModel(categorias.toArray());
@@ -171,53 +171,92 @@ public class FrmProductosEsc extends javax.swing.JFrame {
         return producto;
     }
 
-    private void asignarDatos(Producto producto) {
+    private void asingarDatos(Producto producto) {
         jTxtNombre.setText(producto.getNombre());
         jTxtADescripcion.setText(producto.getDescripcion());
         jTxtPrecio.setText(Double.toString(producto.getPrecio()));
-        jTxtExistencia.setText(Integer.toString(producto.getExistencia()));
+        jTxtExistencia.setText(Integer.toBinaryString(producto.getExistencia()));
         Categoria categoria = new Categoria();
         categoria.setCategoriaId(producto.getCategoriaId());
+        
         jComboCategoria.setSelectedItem(categoria);
     }
 
-    private void crearRegistro() {
+    private void crearReg() {
         try {
             Producto producto = obtenerDatos();
             int result = ProductoDAL.crear(producto);
             if (result > 0) {
                 JOptionPane.showMessageDialog(this,
-                        "El producto fue registrado", "CREAR",
+                        "El producto fue registrado existosamente", "CREAR PRODUCTO",
                         JOptionPane.INFORMATION_MESSAGE);
-
             } else {
                 JOptionPane.showMessageDialog(this,
-                        "El producto no fue registrado", "ERROR",
+                        "Sucedio un error al crear el producto", "ERROR PRODUCTO",
                         JOptionPane.ERROR_MESSAGE);
             }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage(), "ERROR PRODUCTO",
+                    JOptionPane.ERROR_MESSAGE);
         }
-        catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(),
-                        "ERROR",
+    }
+    
+    private void modificarReg() {
+        try {
+            Producto producto = obtenerDatos();
+            int result = ProductoDAL.modificar(producto);
+            if (result > 0) {
+                JOptionPane.showMessageDialog(this,
+                        "El producto fue modificado existosamente", "MODIFICAR PRODUCTO",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Sucedio un error al modificar el producto", "ERROR PRODUCTO",
                         JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage(), "ERROR PRODUCTO",
+                    JOptionPane.ERROR_MESSAGE);
         }
 
     }
+
+    private void eliminarReg() {
+        try {
+            Producto producto = obtenerDatos();
+            int result = ProductoDAL.eliminar(producto);
+            if (result > 0) {
+                JOptionPane.showMessageDialog(this,
+                        "El producto fue eliminado existosamente", "ELIMINAR PRODUCTO",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Sucedio un error al eliminar el producto", "ERROR PRODUCTO",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,
+                    ex.getMessage(), "ERROR PRODUCTO",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+    
     private void jBtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGuardarActionPerformed
-        if (null != OpcionCrud) // TODO add your handling code here:
-            switch (OpcionCrud) {
+        if (null != opcionCRUD) // TODO add your handling code here:
+            switch (opcionCRUD) {
                 case CREAR:
-                    crearRegistro();
+                    crearReg();
                     this.setVisible(false);
                     break;
                 case MODIFICAR:
-                    JOptionPane.showMessageDialog(this,
-                            "Modificar registro", "Modificar", JOptionPane.INFORMATION_MESSAGE);
+                    modificarReg();
                     this.setVisible(false);
                     break;
                 case ELIMINAR:
-                    JOptionPane.showMessageDialog(this,
-                            "Eliminar registro", "Eliminar", JOptionPane.INFORMATION_MESSAGE);
+                    eliminarReg();
                     this.setVisible(false);
                     break;
                 default:

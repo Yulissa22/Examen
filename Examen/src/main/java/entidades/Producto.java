@@ -9,20 +9,20 @@ package entidades;
  * @author MINEDUCYT
  */
 public class Producto {
-    private int productoID;
+    private int productoId;
     private String nombre;
     private String descripcion;
     private double precio;
     private int existencia;
     private int categoriaId;
-    
+
     private Categoria categoria;
 
     public Producto() {
     }
 
-    public Producto(int productoID, String nombre, String descripcion, double precio, int existencia, int categoriaId, Categoria categoria) {
-        this.productoID = productoID;
+    public Producto(int productoId, String nombre, String descripcion, double precio, int categoriaId, Categoria categoria) {
+        this.productoId = productoId;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -31,12 +31,12 @@ public class Producto {
         this.categoria = categoria;
     }
 
-    public int getProductoID() {
-        return productoID;
+    public int getProductoId() {
+        return productoId;
     }
 
-    public void setProductoID(int productoID) {
-        this.productoID = productoID;
+    public void setProductoId(int productoId) {
+        this.productoId = productoId;
     }
 
     public String getNombre() {

@@ -4,6 +4,11 @@
  */
 package com.mycompany.examen;
 
+import accesoadatos.ProductoDAL;
+import entidades.Categoria;
+import entidades.Producto;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 import utilerias.OpcionesCRUD;
 
 /**
@@ -12,7 +17,7 @@ import utilerias.OpcionesCRUD;
  */
 public class FrmProductosLec extends javax.swing.JFrame {
 
-    private OpcionesCRUD OpcionCrud;
+    private OpcionesCRUD opcionCRUD;
     /**
      * Creates new form FrmProductosLec
      */
@@ -42,6 +47,11 @@ public class FrmProductosLec extends javax.swing.JFrame {
         setTitle("Buscar productos");
 
         jBtnBuscar.setText("Buscar");
+        jBtnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnBuscarActionPerformed(evt);
+            }
+        });
 
         jBtnCrear.setText("Crear");
         jBtnCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -138,11 +148,10 @@ public class FrmProductosLec extends javax.swing.JFrame {
 
     private void jBtnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCrearActionPerformed
         // TODO add your handling code here:
-        OpcionCrud = OpcionesCRUD.CREAR;
-        FrmProductosEsc frmProductosEsc = new FrmProductosEsc(OpcionCrud);
+        opcionCRUD = OpcionesCRUD.CREAR;
+        FrmProductosEsc frmProductosEsc = new FrmProductosEsc(opcionCRUD);
         frmProductosEsc.setTitle("Crear producto");
         frmProductosEsc.setVisible(true);
-        
     }//GEN-LAST:event_jBtnCrearActionPerformed
 
     private void jBtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnCancelarActionPerformed
@@ -151,10 +160,27 @@ public class FrmProductosLec extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jBtnCancelarActionPerformed
 
+    private Producto obtenerDatos() {
+        Producto producto = new Producto();
+        int row = jTableProductos.getSelectedRow();
+        producto.setProductoId((int) jTableProductos.getValueAt(row, 0));
+        producto.setNombre(jTableProductos.getValueAt(row, 1).toString());
+        producto.setDescripcion(jTableProductos.getValueAt(row, 2).toString());
+        producto.setPrecio((double) jTableProductos.getValueAt(row, 3));
+        producto.setExistencia((int) jTableProductos.getValueAt(row, 4));
+        producto.setCategoriaId((int) jTableProductos.getValueAt(row, 5));
+
+        Categoria categoria= new Categoria();
+        categoria.setNombre(jTableProductos.getValueAt(row, 5).toString());
+        categoria.setCategoriaId((int)jTableProductos.getValueAt(row, 4));
+        producto.setCategoria(categoria);
+        return producto;
+    }
+    
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
         // TODO add your handling code here:
-        OpcionCrud = OpcionesCRUD.MODIFICAR;
-        FrmProductosEsc frmProductosEsc = new FrmProductosEsc (OpcionCrud);
+        opcionCRUD = OpcionesCRUD.MODIFICAR;
+        FrmProductosEsc frmProductosEsc = new FrmProductosEsc (opcionCRUD);
         frmProductosEsc.setTitle("Editar producto");
         frmProductosEsc.setVisible(true);
         
@@ -162,11 +188,32 @@ public class FrmProductosLec extends javax.swing.JFrame {
 
     private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEliminarActionPerformed
         // TODO add your handling code here:
-        OpcionCrud = OpcionesCRUD.ELIMINAR;
-        FrmProductosEsc frmProductosEsc = new FrmProductosEsc (OpcionCrud);
+        opcionCRUD = OpcionesCRUD.ELIMINAR;
+        FrmProductosEsc frmProductosEsc = new FrmProductosEsc (opcionCRUD);
         frmProductosEsc.setTitle("Eliminar producto");
         frmProductosEsc.setVisible(true);
     }//GEN-LAST:event_jBtnEliminarActionPerformed
+
+    private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
+        // TODO add your handling code here:
+        Producto producto = new Producto();
+        producto.setNombre(jTxtNombre.getText());
+        ArrayList<Producto> productos = ProductoDAL.buscar(producto);
+        String[] columnas = {"ID PRoducto", "Nombre", "Descripcion", "Precio", "Existencia", "CategoriaID", "Categoria"};
+        Object[][] datos = new Object[productos.size()][7];
+        for (int i = 0; i < productos.size(); i++) {
+            Producto item = productos.get(i);
+            datos[i][0] = item.getProductoId();
+            datos[i][1] = item.getNombre();
+            datos[i][2] = item.getDescripcion();
+            datos[i][3] = item.getPrecio();
+            datos[i][4] = item.getExistencia();
+            datos[i][5] = item.getCategoriaId();
+             datos[i][6] = item.getCategoria().getNombre();
+        }
+        DefaultTableModel modelTable = new DefaultTableModel(datos, columnas);
+        jTableProductos.setModel(modelTable);
+    }//GEN-LAST:event_jBtnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
